@@ -1,12 +1,37 @@
 $(function () {
   // header footer
   $(".header-include").load("/include/header.html", function () {
-    $(".trigger").click(function () {
-      $(".mega-navi").stop().slideToggle();
-    });
-    $("section").click(function () {
-      $(".mega-navi").stop().slideUp();
-    });
+    $(window)
+      .resize(function () {
+        if ($(window).innerWidth() > 767) {
+          $(".trigger").click(function () {
+            $(".mega-navi").stop().slideToggle(300);
+          });
+          $("section").click(function () {
+            $(".mega-navi").stop().slideUp(300);
+          });
+        } else if ($(window).innerWidth() <= 767) {
+          // else if 사용해야 함 > else 사용 시 디자인 깨지는 이슈 있음
+          $(".trigger").click(function () {
+            $(".mega-navi").animate(
+              {
+                left: 0,
+              },
+              300
+            );
+          });
+          $("section, .btn-mega-navi-close").click(function () {
+            $(".mega-navi").animate(
+              {
+                left: "-300",
+              },
+              300
+            );
+          });
+        }
+      })
+      .resize();
+
     $(".toggle-pw").click(function () {
       $(this).toggleClass("bi-eye");
       var inputType = $(this).hasClass("bi-eye") ? "text" : "password";
@@ -18,8 +43,22 @@ $(function () {
     $(".btn-modal-close").click(function () {
       $(".member-login-overlay").fadeOut();
     });
+
+    $(".mega-navi-item b").click(function () {
+      $(this).toggleClass("active");
+      $(this).next().slideToggle(200);
+    });
   });
-  $(".footer-include").load("/include/footer.html");
+  $(".footer-include").load("/include/footer.html", function () {
+    $(".link-item-title").click(function () {
+      $(this).toggleClass("active");
+      $(this).next().stop().slideToggle(200);
+    });
+
+    $(".company-info-trigger").click(function () {
+      $("address").slideToggle(300);
+    });
+  });
 
   // scroll header
   $(window).scroll(function () {
@@ -44,9 +83,29 @@ $(function () {
   // focus class
   $(".focus-class-items").slick({
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 2,
     arrows: true,
     dots: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          dots: false,
+          arrows: false,
+        },
+      },
+    ],
   });
 
   // category detail buttons
@@ -99,13 +158,25 @@ $(function () {
 
   // class detail navigation
   $(".class-detail-navigation a").click(function () {
-    $(this).addClass("active");
-    $(this).siblings().removeClass("active");
+    $(this).addClass("active").siblings().removeClass("active");
+    var linkLocation = $(this).attr("href");
+    $("html, body").animate(
+      {
+        scrollTop: $(linkLocation).offset().top - 183,
+      },
+      500
+    );
+    e.preventDefault();
   });
 
   // class detail curriculum
   $(".chapter-title").click(function () {
     $(this).toggleClass("active");
     $(this).next().toggle();
+  });
+
+  // class detail faq
+  $(".faq-title").click(function () {
+    $(this).next().slideToggle(200);
   });
 });

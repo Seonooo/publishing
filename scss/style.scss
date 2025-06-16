@@ -41,7 +41,6 @@ header {
     border: none;
   }
   .header-inner {
-    width: 1160px;
     .logo-search {
       display: flex;
       gap: 20px;
@@ -52,7 +51,8 @@ header {
         img {
         }
       }
-      .search {
+      @at-root .search,
+        .search-mobile {
         width: 520px;
         position: relative;
         input[type="text"] {
@@ -179,8 +179,14 @@ header {
     background-color: $dark-black;
     width: 100%;
     display: none;
+
+    .search-mobile {
+      display: none;
+    }
+    .btn-mega-navi-close {
+      display: none;
+    }
     .mega-navi-inner {
-      width: 1160px;
       margin: auto;
       padding: 20px 0;
       display: flex;
@@ -325,7 +331,7 @@ header {
           color: $dim-black;
         }
       }
-      @at-root.focus-class-items {
+      @at-root .focus-class-items {
         .slide-list {
           margin: 0 -5px;
         }
@@ -376,7 +382,8 @@ header {
               right: 0;
               background-color: $crimson;
               color: $white;
-              font-style: 12px;
+              font-size: 12px;
+
               padding: 2px 8px;
               border-radius: 3px 0 0 3px;
             }
@@ -387,11 +394,11 @@ header {
               font-weight: 400;
             }
             .class-info {
-              font-style: 13px;
+              font-size: 13px;
               color: $light-black;
             }
             .class-price {
-              font-style: 16px;
+              font-size: 16px;
               word-spacing: 10px;
               margin-bottom: 3px;
               .sale {
@@ -407,7 +414,7 @@ header {
               }
             }
             .class-review {
-              font-style: 12px;
+              font-size: 12px;
               font-weight: 400;
               .stars {
                 word-spacing: -2px;
@@ -420,7 +427,7 @@ header {
                 &:after {
                   content: "|";
                   color: $dark-gray;
-                  font-style: 10px;
+                  font-size: 10px;
                   margin-left: 5px;
                   transform: translateY(-2px);
                   display: inline-block;
@@ -745,6 +752,7 @@ footer {
         .link-item {
           .link-item-title {
             color: $silver-gray;
+            pointer-events: none;
           }
           .link-item-content {
             a {
@@ -761,7 +769,10 @@ footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 40px;
+      padding-top: 30px;
+      .company-info-trigger {
+        display: none;
+      }
       address {
         font-style: normal;
       }
@@ -1391,6 +1402,10 @@ footer {
           align-items: center;
           background-color: $white;
           padding: 30px 0;
+          position: sticky;
+          top: 120px;
+          z-index: 100;
+
           a {
             position: relative;
             &.active {
@@ -1699,8 +1714,92 @@ footer {
           .class-detail-wrap {
             .faq-accordion {
               .faq-title {
+                font-size: 15px;
+                font-weight: 500;
+                padding: 10px 0;
+                cursor: pointer;
+
+                b {
+                  font-family: $primary-en;
+                  margin-right: 5px;
+                  font-size: 16px;
+                }
               }
               .faq-content {
+                border-bottom: 1px solid $silver-gray;
+                padding: 10px 0;
+                font-size: 14px;
+                display: none;
+                &:last-child {
+                  border: none;
+                }
+              }
+            }
+          }
+        }
+
+        .class-mentor {
+          .class-detail-wrap {
+            display: flex;
+            gap: 20px;
+            .mentor-profile-summary {
+              flex: 2;
+              border: 1px solid $silver-gray;
+              border-radius: 15px;
+              text-align: center;
+              padding: 30px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+
+              .mentor-avatar {
+                img {
+                  width: 80px;
+                  border-radius: 50%;
+                }
+              }
+              .mentor-slogan {
+                h3 {
+                }
+                p {
+                }
+              }
+              .mentor-class-button {
+                .btn-mentor-profile {
+                  border: 1px solid $dim-gray;
+                  font-size: 13px;
+                  margin: 0 5px;
+                  padding: 3px 15px;
+                  border-radius: 3px;
+                  background-color: $white;
+                  em {
+                    font-style: normal;
+                    color: $orangered;
+                    margin-left: 3px;
+                  }
+                }
+              }
+            }
+            .mentor-profile-career {
+              flex: 4;
+
+              .mentor-profile-header {
+                margin-bottom: 20px;
+                h4 {
+                  font-size: 16px;
+                  margin-bottom: 5px;
+                }
+              }
+              .mentor-profile-history {
+                h4 {
+                  font-size: 16px;
+                  margin-bottom: 5px;
+                }
+                ul {
+                  padding-left: 23px;
+                  line-height: 1.8em;
+                  margin: 0;
+                }
               }
             }
           }
